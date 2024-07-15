@@ -142,6 +142,10 @@ document.getElementById('upload-form').addEventListener('submit', async (e) => {
     // Show PDF download button
     document.getElementById('download-btn').style.display = 'block';
 });
+document.getElementById('download-btn').addEventListener('click', function () {
+    const element = document.getElementById('profile');
+    html2pdf().from(element).save('profile.pdf');
+});
 
 // Reg no. js script
 document.addEventListener('DOMContentLoaded', function () {
