@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Uploader</title>
+
+    <!-- <link rel="stylesheet" href="{{url_for('static', path='/css/album.css') }}"> -->
+
+</head>
+<style>
+    body {
+        width: 100%;
+        height: 100vh;
+        margin: auto;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .upload_form {
+        padding: 20px;
+        margin: 20px;
+        background: lightgreen;
+    }
+
+    h2 {
+        text-decoration: underline;
+        text-align: center;
+    }
+</style>
+
+<body>
+    <div class="upload_form">
+        <h2>Upload Your Image</h2>
+        <form id="upload-form" method="post" enctype="multipart/form-data">
+            <label for="student-reg-no">Student Registration Number:</label>
+            <input type="number" id="student-reg-no" name="student_reg_no" required>
+            <br><br>
+            <label for="files">Select images:</label>
+            <input type="file" id="files" name="files" multiple>
+            <br><br>
+            <button type="submit">Upload Images</button>
+        </form>
+    </div>
+
+    <script>
+        const form = document.getElementById('upload-form');
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const studentRegNo = document.getElementById('student-reg-no').value;
+            const files = document.getElementById('files').files;
+            const formData = new FormData();
+            formData.append('student_reg_no', studentRegNo);
+            for (const file of files) {
+                formData.append('files', file);
+            }
+            try {
+                const response = await fetch('/upload', {
+                    method: 'POST',
+                    body: formData
+                });
+                const data = await response.json();
+                if (data.message === 'Student Registration Number already exists') {
+                    alert('You have already submitted, if not, try again and enter your Student Reg Number.');
+                } else {
+                    console.log(data);
+                    alert('Images uploaded successfully!');
+                }
+            } catch (error) {
+                console.error(error);
+                alert('Error uploading images!');
+            }
+        });
+    </script>
+</body>
+
+</html>
