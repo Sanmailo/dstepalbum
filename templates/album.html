@@ -5,22 +5,51 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Image Album</title>
-    <!-- Optional: Link to your CSS file -->
-    <link rel="stylesheet" href="{{url_for('static', path='/css/album.css') }}">
-    <!-- <link rel="stylesheet" href="/static/album.css"> -->
+    <link rel="stylesheet" href="{{ url_for('static', path='/css/album.css') }}">
+    <!-- Include JSZip and html2canvas libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.5.0-beta4/html2canvas.min.js"></script>
 </head>
 
 <body>
     <h1>Student Album</h1>
+    <!-- Uncommented and corrected the download button for all images -->
+    <!-- <button id="download-pdf">Download As PDF</button> -->
+    <button id="download-individual-btn">Download Individual Profiles</button>
     <div class="image-gallery">
         {% for image in images %}
         <div class="image-item">
-            <!-- <h2>Student Reg No: {{ image.student_reg_no }}</h2> -->
             <img src="data:image/jpeg;base64,{{ image.image }}" alt="{{ image.filename }}" />
-            <!-- <p>Filename: {{ image.filename }}</p> -->
         </div>
         {% endfor %}
     </div>
+    <script>
+        // Function to download all images as a pdf file
+
+        // Function to download individual profile images as a ZIP file
+        document.getElementById('download-individual-btn').addEventListener('click', async () => {
+            try {
+                const zip = new JSZip();
+                const albumElements = document.querySelectorAll('.image-item img');
+
+                for (let i = 0; i < albumElements.length; i++) {
+                    const canvas = await html2canvas(albumElements[i]);
+                    const imgData = canvas.toDataURL('image/png');
+                    zip.file(`profile-${i + 1}.png`, imgData.split(',')[1], { base64: true });
+                }
+
+                const content = await zip.generateAsync({ type: 'blob' });
+                const element = document.createElement('a');
+                element.href = URL.createObjectURL(content);
+                element.download = 'individual-profiles.zip';
+                document.body.appendChild(element);
+                element.click();
+                document.body.removeChild(element);
+            } catch (error) {
+                console.error('Error downloading images:', error);
+            }
+        });
+    </script>
 </body>
 
 </html>
