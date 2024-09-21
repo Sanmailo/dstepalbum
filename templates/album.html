@@ -6,6 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Image Album</title>
     <link rel="stylesheet" href="{{ url_for('static', path='/css/album.css') }}">
+    <!-- include pdf cdn -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
     <!-- Include JSZip and html2canvas libraries -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.5.0-beta4/html2canvas.min.js"></script>
@@ -14,8 +17,10 @@
 <body>
     <h1>Student Album</h1>
     <!-- Uncommented and corrected the download button for all images -->
-    <!-- <button id="download-pdf">Download As PDF</button> -->
-    <button id="download-individual-btn">Download Individual Profiles</button>
+    <div class="download-buttons">
+        <button id="download-pdf" class="album-btn">Download As PDF</button>
+        <button id="download-individual-btn" class="album-btn">Download Individual Profiles</button>
+    </div>
     <div class="image-gallery">
         {% for image in images %}
         <div class="image-item">
@@ -25,7 +30,22 @@
     </div>
     <script>
         // Function to download all images as a pdf file
+        document.getElementById('download-pdf').addEventListener('click', () => {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+            const images = [...document.querySelectorAll('.image-item img')];
 
+            images.forEach((img, index) => {
+                const base64Img = img.src;
+
+                doc.addImage(base64Img, 'JPEG', 10, 10 + (index * 100), 180, 90); // Adjust width/height as needed
+                if (index < images.length - 1) {
+                    doc.addPage();
+                }
+            });
+
+            doc.save('Album.pdf');
+        });
         // Function to download individual profile images as a ZIP file
         document.getElementById('download-individual-btn').addEventListener('click', async () => {
             try {
