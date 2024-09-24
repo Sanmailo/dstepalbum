@@ -1,8 +1,10 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap');
+
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: sans-serif;
+    font-family: "Nunito Sans", sans-serif;
 }
 
 ::selection {
@@ -117,7 +119,7 @@ option {
 
 /* profile result  */
 
-.profiile_container {
+.profile_container {
     display: flex;
     align-items: center;
 }
@@ -133,9 +135,10 @@ option {
     display: none;
     padding: 5px 10px;
     background-color: #fff;
-    width: 398.4px;
+    width: 397.4px;
     height: 566.1px;
     margin: auto;
+    font-size: 14px;
 }
 
 .download-btn {
@@ -213,9 +216,9 @@ option {
     }
 }
 
-.response {
+/* .response {
     position: absolute;
     width: 300px;
     height: 200px;
     background-color: red;
-}
+} */

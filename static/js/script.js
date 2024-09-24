@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", function () {
     const form = document.getElementById('myForm');
-    const responseMessage = document.getElementById('response-message');
+    // const responseMessage = document.getElementById('response-message');
     form.addEventListener('submit', async function (event) {
         event.preventDefault(); // Prevent the default form submission
 
@@ -27,18 +27,17 @@ document.addEventListener("DOMContentLoaded", function () {
 
                 // Show PDF download button
                 document.getElementById('downloadjpg-btn').style.display = 'block';
+                alert(response.data.message);
+                // alert('USer SUbmitted successfully!');
 
-                responseMessage.innerHTML = 'succeful'
-                // Redirect to profile.html on success
-                // window.location.href = '/templates/profile.html';
             } else {
                 alert('Failed to create user: ' + response.data.message);
             }
 
         } catch (error) {
             // Display error message
-            responseMessage.textContent = `Error: ${error.response ? error.response.data.message : error.message}`;
-            responseMessage.style.color = 'red';
+            alert(`Error: ${error.response ? error.response.data.message : error.message}`);
+
         }
 
     });
