@@ -23,9 +23,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
                 // hide myform
                 document.getElementById('myForm').style.display = 'none';
-                document.getElementById('hide').style.display = 'none';
+                document.querySelectorAll('.hide').style.display = 'none';
 
-                // Show PDF download button
                 document.getElementById('downloadjpg-btn').style.display = 'block';
                 alert(response.data.message);
                 // alert('USer SUbmitted successfully!');

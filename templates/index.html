@@ -5,27 +5,34 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dstep album </title>
+    <!-- google fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+        rel="stylesheet">
+    <!-- link css -->
+    <link rel="stylesheet" href="{{url_for('static', path='/css/style.css') }}">
     <!-- cdn to download picture -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.5.0-beta4/html2canvas.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/html2canvas/dist/html2canvas.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.5.0/jszip.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
 
-    <!-- link css -->
-    <link rel="stylesheet" href="{{url_for('static', path='/css/style.css') }}">
-    <!-- <link rel="stylesheet" href="/static/css/style.css"> -->
+
+    <link rel="stylesheet" href="/static/css/style.css">
 </head>
 
 <body>
-    <img src="{{url_for('static',path='asset/dstepLogo.jpg') }}" alt="Dsteplogo" class="logo center my-1" id="hide">
-    <h2 class="center" id="hide">Fill in the form</h2>
+    <img src="{{url_for('static',path='asset/dstepLogo.jpg') }}" alt="Dsteplogo" class="logo center my-1 hide">
+    <h2 class="center hide">Fill in the form</h2>
 
     <!-- form colllection -->
     <form method="POST" action="/users/" id="myForm">
 
         <div class="img-flex m-top">
             <!-- profile picture -->
-            <div class="form-img">
+            <div class="img-flex-container">
                 <strong>profile Image</strong>
                 <img id="profilePicture" name="profilePicture"
                     src="https://icons.veryicon.com/png/o/internet--web/website-blog-utility-icon/personal-center-human-shape.png"
@@ -34,7 +41,7 @@
             </div>
 
             <!-- nin slip -->
-            <div class="form-img">
+            <div class="img-flex-container">
                 <strong>Nin Image</strong>
                 <img id="ninImage" name="ninImage"
                     src="https://icons.veryicon.com/png/o/internet--web/website-blog-utility-icon/personal-center-human-shape.png"
@@ -43,7 +50,7 @@
             </div>
 
             <!-- finger print -->
-            <div class="form-img">
+            <div class="img-flex-container">
                 <strong>Finger image</strong>
                 <img id="fingerprintPicture"
                     src="https://i.pinimg.com/474x/6e/9d/69/6e9d6978e8625606021cf8cbc57e6e15.jpg"
@@ -93,6 +100,13 @@
 
         <!-- Age -->
         <label for="age">Age</label>
+        <!-- <select class="option" id="age" name="age">
+            <option value="0-17">0-17</option>
+            <option value="18-30">18-30</option>
+            <option value="31-45">31-45</option>
+            <option value="46-60">46-60</option>
+            <option value="60above">60</option>
+        </select> -->
         <input type="text" id="age" name="age">
         <!-- physicalChallenge -->
         <label for="physicalChallenge">Physical Challenge</label>
@@ -129,18 +143,13 @@
         <input type="text" id="occupation" name="occupation">
         <!-- submit -->
         <input type="submit" value="Submit" id="submit-btn" class="btn">
-        <!-- <button type="submit" ">Submit</button> -->
-        <!-- <input type="submit"  value="Submit" class="upload-button"> -->
     </form>
-    <!-- <p id="response-message"></p> -->
-
 
     <!-- data collected for printing  -->
     <div class="profile_container">
         <div id="profile">
             <img src="{{url_for('static',path='asset/dstepLogo.jpg')}}" alt="DSTEP" class="img">
-
-
+            <!-- profile details -->
             <div class="container">
                 <div class="d-flex">
                     <!-- passport  -->
@@ -155,7 +164,6 @@
                         <img class="print-img" id="profile_nin"
                             src="https://icons.veryicon.com/png/o/internet--web/website-blog-utility-icon/personal-center-human-shape.png"
                             alt="Profile Picture">
-
                     </div>
 
                     <!-- fingerprint image -->
@@ -163,13 +171,11 @@
                         <img class="print-img print-img2" id="profile_fingerprint"
                             src="https://i.pinimg.com/474x/6e/9d/69/6e9d6978e8625606021cf8cbc57e6e15.jpg"
                             alt="Fingerprint">
-
                     </div>
-                    <!-- date -->
-
                 </div>
             </div>
-            <div class="">
+            <!-- profile data -->
+            <div>
                 <div class="profile_info" id="ninNumber"></div>
                 <div class="profile_info" id="profile_firstname"></div>
                 <div class="profile_info" id="profile_middlename"></div>
@@ -193,9 +199,7 @@
                 <div class="profile_info" id="profile_occupation"></div>
                 <div id="dateTime">Dated: </div>
             </div>
-            <!-- <button id="download-btn" class="btn download-btn">Download as PDF</button> -->
             <button id="downloadjpg-btn" class="btn download-btn">Download Profile</button>
-
         </div>
 
         <!-- link to upload profile  -->
@@ -203,18 +207,13 @@
             <h3>After you have download the profile</h3>
             <a href="/upload_images">Click here to Upload your Profile</a>
         </div>
-
-    </div>
     </div>
 
 
     <!-- Scripting section -->
+    <script src="/static/js/script.js "></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="{{url_for('static', path='js/script.js')}} "></script>
-
-
-    <!-- <script src="/static/js/script.js "></script> -->
-
 </body>
 
 </html>
