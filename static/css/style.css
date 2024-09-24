@@ -24,6 +24,12 @@ form {
     margin-bottom: 20px;
 }
 
+.form-img {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
 .d-flex {
     width: 100%;
     display: flex;
