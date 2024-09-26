@@ -4,7 +4,7 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: "Roboto", sans-serif;
+    font-family: "Nunito Sans", sans-serif;
 }
 
 ::selection {
@@ -35,16 +35,9 @@ form {
 
 .img-flex {
     display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
-
-.img-flex-container {
-    display: flex;
+    /* flex-direction: column; */
     align-items: center;
     justify-content: center;
-    flex-direction: column;
-    margin: 10px;
 }
 
 .img-flex img {
@@ -126,13 +119,6 @@ option {
 }
 
 /* profile result  */
-
-.profile_container {
-    display: flex;
-    align-items: center;
-    margin-bottom: 20px;
-}
-
 #upload_data {
     margin-left: 20px;
     background: #fff;
@@ -145,7 +131,7 @@ option {
     padding: 5px 10px;
     background-color: #fff;
     width: 397.36px;
-    height: 566.1px;
+    height: 567px;
     margin: auto;
     font-size: 14px;
 }
@@ -194,14 +180,14 @@ option {
 }
 
 
-@media (max-width:880px) {
+@media (max-width:780px) {
     body {
         width: 90%;
     }
 
     .img-flex {
-        flex-direction: column;
-        flex-wrap: wrap;
+        display: block;
+        /* text-align: center; */
     }
 
     h2 {

@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Image Album</title>
+    <title>Album</title>
     <link rel="stylesheet" href="{{ url_for('static', path='/css/album.css') }}">
     <!-- include pdf cdn -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
@@ -18,6 +18,7 @@
     <h1>Student Album</h1>
     <!-- Uncommented and corrected the download button for all images -->
     <div class="download-buttons">
+        <button id="pdf" class="album-btn">Show in PDF</button>
         <button id="download-pdf" class="album-btn">Download As PDF</button>
         <button id="download-individual-btn" class="album-btn">Download Individual Profiles</button>
     </div>
@@ -30,22 +31,82 @@
     </div>
     <script>
         // Function to download all images as a pdf file
+        // document.getElementById('download-pdf').addEventListener('click', () => {
+        //     const { jsPDF } = window.jspdf;
+        //     const doc = new jsPDF();
+        //     const images = [...document.querySelectorAll('.image-item img')];
+
+        //     images.forEach((img, index) => {
+        //         const base64Img = img.src;
+
+        //         doc.addImage(base64Img, 'JPEG', 10, 10 + (index * 100), 180, 90); // Adjust width/height as needed
+        //         if (index < images.length - 1) {
+        //             doc.addPage();
+        //         }
+        //     });
+
+        //     doc.save('Album.pdf');
+        // });
+
+        // document.getElementById('download-pdf').addEventListener('click', () => {
+        //     const { jsPDF } = window.jspdf;
+        //     const doc = new jsPDF('portrait', 'mm', 'a4');
+        //     const images = [...document.querySelectorAll('.image-item img')];
+
+        //     const imgWidth = 90; // Width of the image
+        //     const imgHeight = 90; // Height of the image
+        //     const margin = 10; // Margin between images
+        //     const cols = 2; // Number of columns
+        //     const rows = 2; // Number of rows
+
+        //     images.forEach((img, index) => {
+        //         const base64Img = img.src;
+        //         const x = (index % cols) * (imgWidth + margin) + margin; // Calculate x position
+        //         const y = Math.floor(index / cols) * (imgHeight + margin) + margin; // Calculate y position
+
+        //         doc.addImage(base64Img, 'JPEG', x, y, imgWidth, imgHeight); // Add image to PDF
+
+        //         // Add a new page if we have filled the A4 page with 4 images
+        //         if (index % (cols * rows) === (cols * rows) - 1 && index < images.length - 1) {
+        //             doc.addPage();
+        //         }
+        //     });
+
+        //     doc.save('Album.pdf');
+        // });
+
         document.getElementById('download-pdf').addEventListener('click', () => {
             const { jsPDF } = window.jspdf;
-            const doc = new jsPDF();
+            const doc = new jsPDF('portrait', 'mm', 'a4');
             const images = [...document.querySelectorAll('.image-item img')];
+
+            const imgWidth = 90; // Width of the image
+            const imgHeight = 110; // Height of the image
+            const margin = 10; // Margin between images
+            const cols = 2; // Number of columns
+            const rows = 2; // Number of rows
+            const imagesPerPage = cols * rows; // Total images per page
 
             images.forEach((img, index) => {
                 const base64Img = img.src;
 
-                doc.addImage(base64Img, 'JPEG', 10, 10 + (index * 100), 180, 90); // Adjust width/height as needed
-                if (index < images.length - 1) {
+                // Calculate x and y positions based on the index
+                const x = (index % cols) * (imgWidth + margin) + margin;
+                const y = Math.floor((index % imagesPerPage) / cols) * (imgHeight + margin) + margin;
+
+                doc.addImage(base64Img, 'JPEG', x, y, imgWidth, imgHeight); // Add image to PDF
+
+                // Add a new page if we have filled the A4 page with images
+                if ((index + 1) % imagesPerPage === 0 && index < images.length - 1) {
                     doc.addPage();
                 }
             });
 
+            // Save the PDF after processing all images
             doc.save('Album.pdf');
         });
+
+
         // Function to download individual profile images as a ZIP file
         document.getElementById('download-individual-btn').addEventListener('click', async () => {
             try {
@@ -69,6 +130,13 @@
                 console.error('Error downloading images:', error);
             }
         });
+
+        // show in a4 size on screen
+        document.getElementById('pdf').addEventListener('click', () => {
+            const imageGallery = document.querySelector('.image-gallery'); // Select the image gallery element
+            imageGallery.classList.toggle('active'); // Toggle the 'active' class
+        });
+
     </script>
 </body>
 

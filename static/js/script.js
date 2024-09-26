@@ -23,24 +23,32 @@ document.addEventListener("DOMContentLoaded", function () {
 
                 // hide myform
                 document.getElementById('myForm').style.display = 'none';
-                document.querySelectorAll('.hide').style.display = 'none';
+
+                // document.querySelectorAll('.hide').style.display = 'none';
 
                 document.getElementById('downloadjpg-btn').style.display = 'block';
-                alert(response.data.message);
-                // alert('USer SUbmitted successfully!');
+                // alert(response.data.message);
+                alert('USer created successfully!');
 
-            } else {
-                alert('Failed to create user: ' + response.data.message);
             }
 
-        } catch (error) {
-            // Display error message
-            alert(`Error: ${error.response ? error.response.data.message : error.message}`);
-
         }
-
+        catch (error) {
+            // Handle specific error for duplicate email
+            if (error.response && error.response.status === 400 && error.response.data.detail === "Email already registered") {
+                alert('User already exists.');
+            }
+            // else if (error.response && error.response.data) {
+            //     alert(`Error: ${error.response.data.message || error.response.data.detail || "Unexpected error occurred"}`);
+            // }
+            else {
+                alert(`Network Error: ${error.message}`);
+            }
+        }
     });
+
 });
+// });
 
 
 const form = document.querySelector('#myForm')
